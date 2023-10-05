@@ -1,4 +1,4 @@
-package com.example.springsecuritytuto.sec.dto;
+package com.example.springsecuritytuto.sec.dto.response;
 
 import com.example.springsecuritytuto.sec.entities.AppRole;
 import com.fasterxml.jackson.annotation.JsonProperty;

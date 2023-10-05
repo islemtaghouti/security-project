@@ -1,16 +1,15 @@
-package com.example.springsecuritytuto.sec.service;
+package com.example.springsecuritytuto.sec.serviceimpl;
 
-import com.example.springsecuritytuto.sec.dto.UserRequest;
-import com.example.springsecuritytuto.sec.dto.UserResponse;
+import com.example.springsecuritytuto.sec.dto.request.UserRequest;
+import com.example.springsecuritytuto.sec.dto.response.UserResponse;
 import com.example.springsecuritytuto.sec.entities.AppRole;
 import com.example.springsecuritytuto.sec.entities.AppUser;
 import com.example.springsecuritytuto.sec.mapper.AppUserMapper;
 import com.example.springsecuritytuto.sec.reppo.AppRoleRepository;
 import com.example.springsecuritytuto.sec.reppo.AppUserRepository;
-import lombok.NoArgsConstructor;
+import com.example.springsecuritytuto.sec.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     @Override
     public UserResponse addNewUser(UserRequest appUser) {
-        AppUser user = AppUser.builder().username(appUser.getUsername()).
+        AppUser user = AppUser.builder().email(appUser.getUsername()).
                 password(passwordEncoder.encode(appUser.getPassword())).build();
         appUserRepository.save(user);
         return AppUserMapper.INSTANCE.entityToDto(user);
@@ -40,16 +39,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void addRoletoUser(String username, String rolename) {
-        AppUser appUser = appUserRepository.findByUsername(username);
+        AppUser appUser = appUserRepository.findByEmail(username).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
         AppRole appRole = appRoleRepository.findByRoleName(rolename);
         appUser.getAppRoles().add(appRole);
     }
-
-    @Override
-    public UserResponse loadUserByUsername(String username) {
-        return AppUserMapper.INSTANCE.entityToDto(appUserRepository.findByUsername(username));
-    }
-
     @Override
     public List<UserResponse> listUsers() {
         return AppUserMapper.INSTANCE.listEntityToDto(appUserRepository.findAll());

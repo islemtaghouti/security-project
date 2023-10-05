@@ -1,12 +1,10 @@
 package com.example.springsecuritytuto.sec.web;
 
-import com.example.springsecuritytuto.sec.dto.UserRequest;
-import com.example.springsecuritytuto.sec.dto.UserResponse;
+import com.example.springsecuritytuto.sec.dto.request.UserRequest;
+import com.example.springsecuritytuto.sec.dto.response.UserResponse;
 import com.example.springsecuritytuto.sec.entities.AppRole;
-import com.example.springsecuritytuto.sec.entities.AppUser;
 import com.example.springsecuritytuto.sec.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +23,11 @@ public class AccountRestController {
 
     }
     @PostMapping("/addrole")
-    public AppRole addrole(@RequestBody AppRole appRole) {
+    public AppRole add_role(@RequestBody AppRole appRole) {
         return accountService.addNewRole(appRole);
     }
     @PostMapping("/affect-role")
-    public void affectrole(@RequestBody String username,@RequestBody String rolename){
+    public void affect_role(@RequestBody String username,@RequestBody String rolename){
          accountService.addRoletoUser(username,rolename);
     }
 

@@ -1,4 +1,4 @@
-package com.example.springsecuritytuto.sec.dto;
+package com.example.springsecuritytuto.sec.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
