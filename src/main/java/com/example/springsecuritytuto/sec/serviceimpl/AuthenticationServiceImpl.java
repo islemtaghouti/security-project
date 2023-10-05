@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthentificationService {
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        appUserRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(()->new UsernameNotFoundException("Email not found [toEmail: " + authenticationRequest.getEmail() + "]"));
+      //  appUserRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(()->new UsernameNotFoundException("Email not found [toEmail: " + authenticationRequest.getEmail() + "]"));
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         CustomerUserDetails userDetails = (CustomerUserDetails) authentication.getPrincipal();
         var jwt = jwtService.generateToken(userDetails);

@@ -19,6 +19,6 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername( String username ) throws UsernameNotFoundException {
         AppUser appUser = userRepository.findByEmail(username).orElseThrow (
                 () -> new UsernameNotFoundException("User not found [toEmail: " + username + "]"));
-            return  CustomerUserDetails.builder().enabled(appUser.getEnabled()).accountExpired(appUser.getAccountExpired()).accountLocked(appUser.getAccountLocked()).credentialsExpired(appUser.getCredentialsExpired()).email(appUser.getEmail()).password(appUser.getPassword()).firstName(appUser.getFirstName()).lastName(appUser.getLastName()).build();
+            return  CustomerUserDetails.builder().enabled(appUser.getEnabled()).accountExpired(appUser.getAccountExpired()).accountLocked(appUser.getAccountLocked()).credentialsExpired(appUser.getCredentialsExpired()).email(appUser.getEmail()).password(appUser.getPassword()).firstName(appUser.getFirstName()).profile(appUser.getProfile()).lastName(appUser.getLastName()).build();
     }
 }
